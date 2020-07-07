@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/ButtonsCalculator"
+        android:layout_width="409dp"
+        android:layout_height="400dp"
+        android:layout_marginTop="36dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/viewbtnDD"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="destroyer_method"
+            android:text="@string/btnDD" />
+
+        <Button
+            android:id="@+id/viewbtnCL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="lcruiser_method"
+            android:text="@string/btnCL" />
+
+        <Button
+            android:id="@+id/viewbtnCA"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="hcruiser_method"
+            android:text="@string/btnCA" />
+
+        <Button
+            android:id="@+id/viewbtnBB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="battleship_method"
+            android:text="@string/btnBB" />
+
+        <Button
+            android:id="@+id/viewbtnCV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="carrier_method"
+            android:text="@string/btnCV" />
+
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

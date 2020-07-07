@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AzurCompendium</string>
+    <string name="btnDD">Destroyers(DD)</string>
+    <string name="btnCL">Light Cruisers(CL)</string>
+    <string name="btnCA">Heavy Cruisers(CA)</string>
+    <string name="btnBB">Battleships/Battle cruisers(BB/BC)</string>
+    <string name="btnCV">Carriers/Light Carriers(CV/CVL)</string>
+</resources>
