@@ -6,4 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".Calculator">
 
+    <LinearLayout
+        android:id="@+id/viewShipfu"
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/viewLblDownload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/btnDownload" />
+
+        <Button
+            android:id="@+id/viewBtnText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="testButton"
+            android:text="@string/btnDD" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

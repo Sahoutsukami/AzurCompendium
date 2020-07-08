@@ -5,4 +5,5 @@
     <string name="btnCA">Heavy Cruisers(CA)</string>
     <string name="btnBB">Battleships/Battle cruisers(BB/BC)</string>
     <string name="btnCV">Carriers/Light Carriers(CV/CVL)</string>
+    <string name="btnDownload">Debug</string>
 </resources>
