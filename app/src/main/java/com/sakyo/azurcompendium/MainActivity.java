@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void destroyer_method(View view) {
         Intent i = new Intent(this, Calculator.class);
-        i.putExtra("Hull","DD");
+        i.putExtra("Hull","https://api.npoint.io/a296aa5cd2c25677387e");
         startActivity(i);
     }
     public void lcruiser_method(View view) {

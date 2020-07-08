@@ -1,7 +1,9 @@
 package com.sakyo.azurcompendium;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ public class Calculator extends AppCompatActivity {
 
     private TextView lblDebugDB;
     private RequestQueue mQueue;
+    private RecyclerView ShipSelector;
 
 
     @Override
@@ -30,15 +33,23 @@ public class Calculator extends AppCompatActivity {
         setContentView(R.layout.activity_calculator);
 
         lblDebugDB = findViewById(R.id.viewLblDownload);
+        ShipSelector = findViewById(R.id.viewShipSelector);
         mQueue = Volley.newRequestQueue(this);
+
+        jsonParse();
+        String ye = getIntent().getStringExtra("Hull");
+        lblDebugDB.setText(ye);
     }
 
     public void testButton(View view){
         jsonParse();
     }
 
-    private void jsonParse(){
-        String url = "https://api.npoint.io/a296aa5cd2c25677387e";
+    private void jsonParse(){                                                                        //Parse JSON
+
+        String url = getIntent().getStringExtra("Hull");
+
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -49,9 +60,14 @@ public class Calculator extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++){
                                 JSONObject ship = jsonArray.getJSONObject(i);
 
-                                String name = ship.getString("Nombre");
+                                int loops = 0;
+                                loops++;
 
-                                lblDebugDB.append(name);
+                                if(loops==1) {
+                                    String name = ship.getString("Nombre");
+                                }
+
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -65,5 +81,6 @@ public class Calculator extends AppCompatActivity {
     });
         mQueue.add(request);
     }
+
 
 }
