@@ -3,7 +3,6 @@ package com.sakyo.azurcompendium;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -12,7 +11,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -36,16 +34,16 @@ public class Calculator extends AppCompatActivity {
         ShipSelector = findViewById(R.id.viewShipSelector);
         mQueue = Volley.newRequestQueue(this);
 
-        jsonParse();
+        jsonParseNames();
         String ye = getIntent().getStringExtra("Hull");
         lblDebugDB.setText(ye);
     }
 
     public void testButton(View view){
-        jsonParse();
+        jsonParseNames();
     }
 
-    private void jsonParse(){                                                                        //Parse JSON
+    private void jsonParseNames(){                                                                        //Parse JSON
 
         String url = getIntent().getStringExtra("Hull");
 
@@ -57,17 +55,11 @@ public class Calculator extends AppCompatActivity {
                         try {
                             JSONArray jsonArray = response.getJSONArray("Ships");
 
-                            for (int i = 0; i < jsonArray.length(); i++){
+                            for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject ship = jsonArray.getJSONObject(i);
 
-                                int loops = 0;
-                                loops++;
-
-                                if(loops==1) {
-                                    String name = ship.getString("Nombre");
-                                }
-
-
+                                String name = ship.getString("Nombre");
+                                lblDebugDB.append(name);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
