@@ -1,6 +1,8 @@
 package com.sakyo.azurcompendium;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -22,8 +24,11 @@ import java.util.ArrayList;
 public class ShipSelection extends AppCompatActivity {
 
     public RequestQueue mQueue;
-    private TextView txt;
-    String name;
+    private RecyclerView recyclerSelector;
+    private RecyclerView.Adapter adapterSelector;
+    private RecyclerView.LayoutManager layoutSelector;
+
+    private String name;
     ArrayList<CardsShip> shipArrayList = new ArrayList<>();
 
 
@@ -33,8 +38,10 @@ public class ShipSelection extends AppCompatActivity {
         setContentView(R.layout.activity_ship_selection);
         mQueue = Volley.newRequestQueue(this);
 
-        txt = findViewById(R.id.textView);
-
+        recyclerSelector = findViewById(R.id.viewReciclerShips);
+        recyclerSelector.setHasFixedSize(true);
+        layoutSelector = new LinearLayoutManager(this);
+        recyclerSelector.setLayoutManager(layoutSelector);
 
         jsonParseNames();
     }
@@ -42,7 +49,6 @@ public class ShipSelection extends AppCompatActivity {
 
         Toast.makeText(this, "Ejecuto", Toast.LENGTH_LONG).show();
         String url = getIntent().getStringExtra("link");
-        txt.setText(url);
 
 
 
@@ -62,6 +68,9 @@ public class ShipSelection extends AppCompatActivity {
 
 
                             }
+                            adapterSelector = new SelectorAdapter(shipArrayList);
+                            recyclerSelector.setAdapter(adapterSelector);
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

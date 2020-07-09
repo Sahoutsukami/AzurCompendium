@@ -7,6 +7,7 @@
     <string name="btnCV">Carriers/Light Carriers(CV/CVL)</string>
     <string name="btnDownload">Debug</string>
     <string name="lblNameShip">No Ship Name</string>
+    <string name="descriptorImage">No description found</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>
