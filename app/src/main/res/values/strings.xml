@@ -6,6 +6,7 @@
     <string name="btnBB">Battleships/Battle cruisers(BB/BC)</string>
     <string name="btnCV">Carriers/Light Carriers(CV/CVL)</string>
     <string name="btnDownload">Debug</string>
+    <string name="lblNameShip">No Ship Name</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>

@@ -2,11 +2,9 @@ package com.sakyo.azurcompendium;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,45 +17,33 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Calculator extends AppCompatActivity {
+import java.util.ArrayList;
 
-    private TextView lblDebugDB;
-    private RequestQueue mQueue;
+public class ShipSelection extends AppCompatActivity {
 
+    public RequestQueue mQueue;
+    private TextView txt;
+    String name;
+    ArrayList<CardsShip> shipArrayList = new ArrayList<>();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculator);
-
-        lblDebugDB = findViewById(R.id.viewLblDownload);
+        setContentView(R.layout.activity_ship_selection);
         mQueue = Volley.newRequestQueue(this);
 
+        txt = findViewById(R.id.textView);
 
 
-        //String ye = getIntent().getStringExtra("Hull");
-        //lblDebugDB.setText(ye);
+        jsonParseNames();
     }
+    private void jsonParseNames(){
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        jsonParseStats();
-    }
+        Toast.makeText(this, "Ejecuto", Toast.LENGTH_LONG).show();
+        String url = getIntent().getStringExtra("link");
+        txt.setText(url);
 
-    public void selectButton(View view){
-
-        String link = getIntent().getStringExtra("Hull");
-        Intent i = new Intent(this, ShipSelection.class);
-        i.putExtra("link", link);
-        startActivity(i);
-    }
-
-
-    private void jsonParseStats(){
-
-        String url = getIntent().getStringExtra("Hull");
 
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -70,8 +56,11 @@ public class Calculator extends AppCompatActivity {
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject ship = jsonArray.getJSONObject(i);
 
-                                String name = ship.getString("Nombre");
-                                lblDebugDB.append(name);
+                                name = ship.getString("Nombre");
+
+                                shipArrayList.add(new CardsShip(R.drawable.ic_terrain, name));
+
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -84,8 +73,5 @@ public class Calculator extends AppCompatActivity {
             }
         });
         mQueue.add(request);
-    } //Parse when Ship change only
-
-
-
+    } //Obtain only one time names of Ships
 }
