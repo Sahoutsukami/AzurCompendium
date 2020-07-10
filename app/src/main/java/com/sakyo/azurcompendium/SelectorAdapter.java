@@ -15,15 +15,35 @@ public class SelectorAdapter extends RecyclerView.Adapter<SelectorAdapter.Select
 
     private ArrayList<CardsShip> mList;
 
+    private OnItemClickListener mListener;
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mListener = listener;
+    }
+
     public static class SelectorViewHolder extends RecyclerView.ViewHolder {
 
         public ImageView iconShip;
         public TextView lblNameShip;
 
-        public SelectorViewHolder(@NonNull View itemView) {
+        public SelectorViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             iconShip = itemView.findViewById(R.id.viewImgShip);
             lblNameShip = itemView.findViewById(R.id.viewLblNameShip);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 
@@ -36,7 +56,7 @@ public class SelectorAdapter extends RecyclerView.Adapter<SelectorAdapter.Select
     public SelectorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(
                 R.layout.item_ship, parent, false);
-        SelectorViewHolder evh = new SelectorViewHolder(v);
+        SelectorViewHolder evh = new SelectorViewHolder(v, mListener);
         return evh;
     }
 

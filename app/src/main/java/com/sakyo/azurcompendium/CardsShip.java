@@ -15,4 +15,5 @@ public class CardsShip {
     public String getName(){
         return lblShip;
     }
+
 }

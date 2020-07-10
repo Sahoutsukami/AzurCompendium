@@ -8,6 +8,7 @@
     <string name="btnDownload">Debug</string>
     <string name="lblNameShip">No Ship Name</string>
     <string name="descriptorImage">No description found</string>
+    <string name="btnSelectShip">-- Select your Shipfu --</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>

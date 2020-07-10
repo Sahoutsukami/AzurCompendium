@@ -4,8 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -25,11 +26,14 @@ public class ShipSelection extends AppCompatActivity {
 
     public RequestQueue mQueue;
     private RecyclerView recyclerSelector;
-    private RecyclerView.Adapter adapterSelector;
+    private SelectorAdapter adapterSelector;
     private RecyclerView.LayoutManager layoutSelector;
 
     private String name;
-    ArrayList<CardsShip> shipArrayList = new ArrayList<>();
+    private int selection1;
+    private int selection2;
+    private ArrayList<CardsShip> shipArrayList = new ArrayList<>();
+    private String origin;
 
 
     @Override
@@ -43,14 +47,19 @@ public class ShipSelection extends AppCompatActivity {
         layoutSelector = new LinearLayoutManager(this);
         recyclerSelector.setLayoutManager(layoutSelector);
 
-        jsonParseNames();
+        origin = getIntent().getStringExtra("from");
+
+        if (origin.equals("Ship")) {
+            Toast.makeText(this, origin, Toast.LENGTH_SHORT).show();
+            jsonParseNames();
+        } else if (origin.equals("Weapon")){
+
+            jsonParseWeapons();
+        }
     }
     private void jsonParseNames(){
 
-        Toast.makeText(this, "Ejecuto", Toast.LENGTH_LONG).show();
         String url = getIntent().getStringExtra("link");
-
-
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -71,6 +80,16 @@ public class ShipSelection extends AppCompatActivity {
                             adapterSelector = new SelectorAdapter(shipArrayList);
                             recyclerSelector.setAdapter(adapterSelector);
 
+                            adapterSelector.setOnItemClickListener(
+                                    new SelectorAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+                                    selection1 = position;
+                                    //debug();
+                                    previous();
+                                }
+                            });
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -83,4 +102,61 @@ public class ShipSelection extends AppCompatActivity {
         });
         mQueue.add(request);
     } //Obtain only one time names of Ships
+
+    private void jsonParseWeapons(){
+
+        String url = getIntent().getStringExtra("link");
+
+
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            JSONArray jsonArray = response.getJSONArray("Weapons");
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject ship = jsonArray.getJSONObject(i);
+
+                                name = ship.getString("Nombre:");
+
+                                shipArrayList.add(new CardsShip(R.drawable.ic_terrain, name));
+
+
+                            }
+                            adapterSelector = new SelectorAdapter(shipArrayList);
+                            recyclerSelector.setAdapter(adapterSelector);
+
+                            adapterSelector.setOnItemClickListener(
+                                    new SelectorAdapter.OnItemClickListener() {
+                                        @Override
+                                        public void onItemClick(int position) {
+                                            selection2 = position;
+                                            //debug();
+                                            previous();
+                                        }
+                                    });
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+        mQueue.add(request);
+    } //Obtain only one time names of Weapons
+
+
+    public void debug(){
+        Toast.makeText(this, Integer.toString(selection1), Toast.LENGTH_LONG).show();
+    }
+    public void previous(){
+        setResult(Activity.RESULT_OK,
+                new Intent().putExtra("idShip", selection1).putExtra("idWeapon", selection2));
+        finish();
+    }
 }
