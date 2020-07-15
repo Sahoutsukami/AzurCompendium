@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, Calculator.class);
         i.putExtra("Ship","https://api.npoint.io/a296aa5cd2c25677387e");
         i.putExtra("MainGun","https://api.npoint.io/35bb066e41213e92dd02");
+        i.putExtra("Hull", "DD");
         startActivity(i);
     }
     public void lcruiser_method(View view) {

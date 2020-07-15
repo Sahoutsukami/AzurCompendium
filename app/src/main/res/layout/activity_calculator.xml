@@ -38,12 +38,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="selectWeapon"
+            android:enabled="false"
             android:text="@string/btnSelectWeapon" />
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/enhance"
         android:layout_width="409dp"
-        android:layout_height="593dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:orientation="vertical"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,5 +70,64 @@
             android:progress="0" />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="411dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enhance">
+
+        <TextView
+            android:id="@+id/viewLblBaseDmg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="39dp"
+            android:layout_marginTop="38dp"
+            android:text="@string/lblMainDMG" />
+
+        <TextView
+            android:id="@+id/viewLblCoeff"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewLblBaseDmg"
+            android:layout_alignStart="@+id/viewLblBaseDmg"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="21dp"
+            android:text="@string/lblMainCoeff" />
+
+        <TextView
+            android:id="@+id/viewLblBaseRoF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewLblBaseDmg"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="-20dp"
+            android:layout_marginEnd="51dp"
+            android:text="@string/lblMainRoF" />
+
+        <TextView
+            android:id="@+id/viewLblAmmo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewLblBaseRoF"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="21dp"
+            android:layout_marginEnd="72dp"
+            android:text="@string/lblMainAmmo" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="168dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
