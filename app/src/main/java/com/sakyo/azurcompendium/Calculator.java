@@ -8,8 +8,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.SeekBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -22,8 +23,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Objects;
-
 public class Calculator extends AppCompatActivity {
 
     private RequestQueue mQueue;
@@ -31,7 +30,11 @@ public class Calculator extends AppCompatActivity {
     private static final int REQUEST_GET_WEAPON_LOCATION = 0;
     private int shipId;
     private int weaponId;
-    private TextView u;
+
+    private TextView lblEnhance;
+    private SeekBar sldEnhance;
+    private Button btnShip;
+    private Button btnWeapon;
 
     // region Ship Stats
     private int hp;
@@ -58,6 +61,8 @@ public class Calculator extends AppCompatActivity {
     // endregion Sip Stats
 
     //region Weapon Stats
+    private int enhanceLvl = 0;
+
     private int wdmg;
     private int wrld;
     private int timeVolley;
@@ -75,49 +80,59 @@ public class Calculator extends AppCompatActivity {
     private String wFaction;
     //endregion Weapon Stats
 
+    private void Formating(){
+        lblEnhance.setText(getResources().getString
+                (R.string.lblEnhance, enhanceLvl));
+
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
 
         mQueue = Volley.newRequestQueue(this);
-        u = findViewById(R.id.textView);
 
+        lblEnhance = findViewById(R.id.viewLblEnhance);
+        sldEnhance = findViewById(R.id.viewSldEnhance);
+        btnShip = findViewById(R.id.btnSelectSip);
+        btnWeapon = findViewById(R.id.btnSelectWeapon);
+
+        Formating();
+
+        sldEnhance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                enhanceLvl = progress;
+                lblEnhance.setText(getResources().getString
+                        (R.string.lblEnhance, enhanceLvl));
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {            }
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {            }
+        });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        //determineMainGun("DD");
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-    }
 
     public void selectButton(View view){
 
         String link = getIntent().getStringExtra("Ship");
         Intent i = new Intent(this, ShipSelection.class);
-        i.putExtra("link", link).putExtra("from", "Ship");
+        i.putExtra("link", link).putExtra("from", "Ship").putExtra
+                ("CurrentIdS", shipId).putExtra("CurrentIdW", weaponId);
         startActivityForResult(i, REQUEST_GET_SHIP_LOCATION);
     }
 
     public void selectWeapon(View view){
         String link = getIntent().getStringExtra("MainGun");
         Intent i = new Intent(this, ShipSelection.class);
-        i.putExtra("link", link).putExtra("from", "Weapon");
-        startActivityForResult(i, REQUEST_GET_SHIP_LOCATION);
+        i.putExtra("link", link).putExtra("from", "Weapon").putExtra
+                ("CurrentIdS", shipId).putExtra("CurrentIdW", weaponId);
+        startActivityForResult(i, REQUEST_GET_WEAPON_LOCATION);
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -127,10 +142,9 @@ public class Calculator extends AppCompatActivity {
             weaponId = data.getIntExtra("idWeapon",0);
             jsonParseStats();
             jsonParseMainGuns();
-            //setVariables();
         }
-    }
-
+    }    //Return
+                                                                                                     //Position
 
 
     private void jsonParseStats(){
@@ -167,6 +181,8 @@ public class Calculator extends AppCompatActivity {
                             faction = ship.getString("Faction");
                             slot1 = ship.getString("Slot 1");
                             slot2 = ship.getString("Slot 2");
+
+                            setTexts();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -212,6 +228,8 @@ public class Calculator extends AppCompatActivity {
                             ammo = ship.getString("Ammo");
                             wFaction = ship.getString("Faction");
 
+                            setTexts();
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -223,9 +241,12 @@ public class Calculator extends AppCompatActivity {
             }
         });
         mQueue.add(request);
+
     } //Parse weapons
 
-    private void setVariables(){
-
+    private void setTexts(){
+        btnShip.setText(name);
+        btnWeapon.setText(wName);
     }
+
 }

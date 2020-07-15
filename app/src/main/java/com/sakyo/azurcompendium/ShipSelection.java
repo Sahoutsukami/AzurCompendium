@@ -30,6 +30,24 @@ public class ShipSelection extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutSelector;
 
     private String name;
+    private int wdmg;
+    private int wrld;
+    private int wfp;
+    private int waa;
+    private int timeVolley;
+    private int nVolleys;
+    private int enhanceDmg;
+    private int enhanceRld;
+    private int coeff;
+    private int range;
+    private int rangeShell;
+    private int spread;
+
+    private String wName;
+    private String wFaction;
+    private String ammo;
+
+
     private int selection1;
     private int selection2;
     private ArrayList<CardsShip> shipArrayList = new ArrayList<>();
@@ -48,12 +66,12 @@ public class ShipSelection extends AppCompatActivity {
         recyclerSelector.setLayoutManager(layoutSelector);
 
         origin = getIntent().getStringExtra("from");
+        selection1 = getIntent().getIntExtra("CurrentIdS", 0);
+        selection2 = getIntent().getIntExtra("CurrentIdW", 0);
 
         if (origin.equals("Ship")) {
-            Toast.makeText(this, origin, Toast.LENGTH_SHORT).show();
             jsonParseNames();
         } else if (origin.equals("Weapon")){
-
             jsonParseWeapons();
         }
     }
@@ -85,7 +103,7 @@ public class ShipSelection extends AppCompatActivity {
                                 @Override
                                 public void onItemClick(int position) {
                                     selection1 = position;
-                                    //debug();
+                                    debug();
                                     previous();
                                 }
                             });
@@ -124,6 +142,7 @@ public class ShipSelection extends AppCompatActivity {
 
 
                             }
+
                             adapterSelector = new SelectorAdapter(shipArrayList);
                             recyclerSelector.setAdapter(adapterSelector);
 
@@ -132,7 +151,7 @@ public class ShipSelection extends AppCompatActivity {
                                         @Override
                                         public void onItemClick(int position) {
                                             selection2 = position;
-                                            //debug();
+                                            debug();
                                             previous();
                                         }
                                     });
@@ -152,7 +171,9 @@ public class ShipSelection extends AppCompatActivity {
 
 
     public void debug(){
-        Toast.makeText(this, Integer.toString(selection1), Toast.LENGTH_LONG).show();
+        Toast.makeText(this,Integer.toString(selection1), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,Integer.toString(selection2), Toast.LENGTH_SHORT).show();
+
     }
     public void previous(){
         setResult(Activity.RESULT_OK,

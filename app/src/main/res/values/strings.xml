@@ -9,6 +9,8 @@
     <string name="lblNameShip">No Ship Name</string>
     <string name="descriptorImage">No description found</string>
     <string name="btnSelectShip">-- Select your Shipfu --</string>
+    <string name="btnSelectWeapon">-- Select your Weapon --</string>
+    <string name="lblEnhance">Enhance: +%1$d</string>
     <!-- Strings used for fragments for navigation -->
 
 </resources>
