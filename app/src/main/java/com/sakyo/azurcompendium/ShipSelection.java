@@ -30,23 +30,6 @@ public class ShipSelection extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutSelector;
 
     private String name;
-    private int wdmg;
-    private int wrld;
-    private int wfp;
-    private int waa;
-    private int timeVolley;
-    private int nVolleys;
-    private int enhanceDmg;
-    private int enhanceRld;
-    private int coeff;
-    private int range;
-    private int rangeShell;
-    private int spread;
-
-    private String wName;
-    private String wFaction;
-    private String ammo;
-
 
     private int selection1;
     private int selection2;

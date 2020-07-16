@@ -39,6 +39,7 @@ public class Calculator extends AppCompatActivity {
     private TextView lblRoF;
     private TextView lblCoeff;
     private TextView lblAmmo;
+    private TextView lblDPS;
     private Button btnShip;
     private Button btnWeapon;
 
@@ -49,7 +50,7 @@ public class Calculator extends AppCompatActivity {
     private int eva;
     private int fp;
     private int trp;
-    private int rld;
+    private double rld;
     private int avi;
     private int aa;
     private int lck;
@@ -57,18 +58,20 @@ public class Calculator extends AppCompatActivity {
     private int asw;
     private int speed;
     private int oil;
-    private int eff1;
-    private int eff2;
-    private int eff3;
+    private double eff1 = 0;
+    private double eff2 = 0;
+    private double eff3 = 0;
     private int mgm;
-    private String name;
+    private String name = "-- Select your Shipfu";
     private String armor;
     private String faction;
     private String slot1;
     private String slot2;
     // endregion Sip Stats
 
+    private double totalFP = 0;
     private double FPBonus = 0;
+    private double absCd = 0;
 
     //region Weapon Stats
     private int enhanceLvl = 0;
@@ -84,6 +87,9 @@ public class Calculator extends AppCompatActivity {
     private double enhanceDmg;
     private double enhanceRld;
     private double coeff = 0;
+    private double lightModifier = 0;
+    private double mediumModifier = 0;
+    private double heavyModifier = 0;
     private int wfp;
     private int waa;
     private int range;
@@ -91,14 +97,17 @@ public class Calculator extends AppCompatActivity {
     private int spread;
     private double totalCd = 0.0;
 
-    private String wName = "None";
-    private String ammo;
+    private String wName = "-- Select your weapon --";
+    private String ammo = "None";
     private String wFaction;
     //endregion Weapon Stats
 
     private void Formatting(){
 
         MainDPS();
+
+        btnShip.setText(name);
+        btnWeapon.setText(wName);
 
         lblEnhance.setText(getResources().getString
                 (R.string.lblEnhance, enhanceLvl));
@@ -111,6 +120,8 @@ public class Calculator extends AppCompatActivity {
                 (R.string.lblMainCoeff, (100*coeff), "%"));
         lblAmmo.setText(getResources().getString
                 (R.string.lblMainAmmo, ammo));
+
+
 
     }
 
@@ -128,6 +139,7 @@ public class Calculator extends AppCompatActivity {
         lblRoF = findViewById(R.id.viewLblBaseRoF);
         lblCoeff = findViewById(R.id.viewLblCoeff);
         lblAmmo = findViewById(R.id.viewLblAmmo);
+        lblDPS = findViewById(R.id.viewLblDpsLight);
 
         u = findViewById(R.id.textView);
 
@@ -140,12 +152,7 @@ public class Calculator extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 enhanceLvl = progress;
-                enhancedDmg = enhanceDmg*enhanceLvl;
-                enhancedRld = enhanceRld*enhanceLvl;
-                finalDmg = wdmg+enhancedDmg;
-                finalRld = wrld+enhancedRld;
-                totalCd = finalRld+timeVolley;
-
+                MainDPS();
                 lblEnhance.setText(getResources().getString
                         (R.string.lblEnhance, enhanceLvl));
 
@@ -153,6 +160,8 @@ public class Calculator extends AppCompatActivity {
                         (R.string.lblMainDMG, finalDmg, nVolleys));
                 lblRoF.setText(getResources().getString
                         (R.string.lblMainRoF, totalCd));
+
+
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {            }
@@ -163,7 +172,8 @@ public class Calculator extends AppCompatActivity {
 
 
     public void selectButton(View view){
-        btnWeapon.setEnabled(true);
+        btnWeapon.setEnabled(false);
+        btnWeapon.setEnabled(false);
 
         String link = getIntent().getStringExtra("Ship");
         Intent i = new Intent(this, ShipSelection.class);
@@ -173,6 +183,9 @@ public class Calculator extends AppCompatActivity {
     }
 
     public void selectWeapon(View view){
+        btnWeapon.setEnabled(false);
+        btnWeapon.setEnabled(false);
+
         String link = getIntent().getStringExtra("MainGun");
         Intent i = new Intent(this, ShipSelection.class);
         i.putExtra("link", link).putExtra("from", "Weapon").putExtra
@@ -190,6 +203,9 @@ public class Calculator extends AppCompatActivity {
             weaponId = data.getIntExtra("idWeapon",0);
             jsonParseStats();
             jsonParseMainGuns();
+
+            btnShip.setEnabled(true);
+            btnWeapon.setEnabled(true);
         }
     }    //Return
                                                                                                      //Position
@@ -220,15 +236,17 @@ public class Calculator extends AppCompatActivity {
                             asw = ship.getInt("ASW");
                             speed = ship.getInt("Speed");
                             oil = ship.getInt("Oil");
-                            eff1 = ship.getInt("Eff1");
-                            eff2 = ship.getInt("Eff2");
-                            eff3 = ship.getInt("Eff3");
+                            eff1 = ship.getDouble("Eff1");
+                            eff2 = ship.getDouble("Eff2");
+                            eff3 = ship.getDouble("Eff3");
                             mgm = ship.getInt("#MainGun");
                             name = ship.getString("Nombre");
                             armor = ship.getString("Armor");
                             faction = ship.getString("Faction");
                             slot1 = ship.getString("Slot 1");
                             slot2 = ship.getString("Slot 2");
+
+                            Formatting();
 
 
                         } catch (JSONException e) {
@@ -265,6 +283,9 @@ public class Calculator extends AppCompatActivity {
                             enhanceDmg = ship.getDouble("EnhanceDMG");
                             enhanceRld = ship.getDouble("EnhanceRLD");
                             coeff = ship.getDouble("Coefficient");
+                            lightModifier = ship.getDouble("Light");
+                            mediumModifier = ship.getDouble("Medium");
+                            heavyModifier = ship.getDouble("Heavy");
                             wfp = ship.getInt("FP");
                             waa = ship.getInt("AA");
                             range = ship.getInt("Range");
@@ -291,27 +312,29 @@ public class Calculator extends AppCompatActivity {
         mQueue.add(request);
 
     } //Parse weapons
-
     private void MainDPS(){
+        absCd = getIntent().getDoubleExtra("absCd",0); //get absolute cooldown
+
+
         //Apply enhances to Main gun damage and reload
         enhancedDmg = enhanceDmg*enhanceLvl;
-        enhancedRld = enhanceRld*enhancedRld;
+        enhancedRld = enhanceRld*enhanceLvl;
         finalDmg = wdmg+enhancedDmg;
         finalRld = wrld+enhancedRld;
-        totalCd = finalRld+timeVolley;
-        totalCd = wrld+timeVolley;
+        totalCd = finalRld+timeVolley+absCd;
 
         //Firepower Bonus
-        double totalFP = wfp+fp;
+        totalFP = fp+wfp;
         FPBonus = 1+(totalFP/100);
 
-        //Determine Ammo Modifiers
-        String hull = getIntent().getStringExtra("Hull");
+        //Calculate DPS
+        double cd = (finalRld*(Math.sqrt(200/(rld+100))))+timeVolley+absCd; //Real DPS
+        //double cd = totalCd;                                                  //Only Weapon
+        double dps = (finalDmg*coeff*eff1*FPBonus*nVolleys);                //Real DPS
+        //double dps = (finalDmg*coeff*nVolleys);                               //Only Weapon
 
-        double lightModifier = 0;
-        double mediumModifier = 0;
-        double heavyModifier = 0;
-
+        lblDPS.setText(getResources().getString(R.string.lblMainGunDpsNum, ((dps*lightModifier)/cd),
+                ((dps*mediumModifier)/cd), ((dps*heavyModifier)/cd)));
 
     }
 

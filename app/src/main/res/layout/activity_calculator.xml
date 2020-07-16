@@ -72,20 +72,34 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:id="@+id/relativeLayout"
-        android:layout_width="411dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/MainGun"
+        android:layout_width="match_parent"
+        android:layout_height="415dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enhance">
+
+        <TextView
+            android:id="@+id/viewLblWeapon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/lblMainGun"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/viewLblBaseDmg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/viewLblWeapon"
             android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="39dp"
-            android:layout_marginTop="38dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="24dp"
             android:text="@string/lblMainDMG" />
 
         <TextView
@@ -118,6 +132,34 @@
             android:layout_marginEnd="72dp"
             android:text="@string/lblMainAmmo" />
 
+        <TextView
+            android:id="@+id/viewLblDPS"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewLblWeapon"
+            android:layout_alignStart="@+id/viewLblWeapon"
+            android:layout_alignEnd="@+id/viewLblWeapon"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="0dp"
+            android:text="@string/lblMainGunDps" />
+
+        <TextView
+            android:id="@+id/viewLblDpsLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/viewLblDPS"
+            android:layout_alignStart="@+id/viewLblDPS"
+            android:layout_alignEnd="@+id/viewLblDPS"
+            android:gravity="center"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="27dp"
+            android:layout_marginEnd="0dp"
+            android:text="@string/lblMainGunDpsNum" />
+
     </RelativeLayout>
 
     <TextView
@@ -128,6 +170,6 @@
         android:layout_marginTop="168dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/MainGun" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
