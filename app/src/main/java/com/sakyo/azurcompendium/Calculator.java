@@ -8,8 +8,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,7 +28,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Calculator extends AppCompatActivity {
+public class Calculator extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private RequestQueue mQueue;
     private static final int REQUEST_GET_SHIP_LOCATION = 0;
@@ -33,12 +36,16 @@ public class Calculator extends AppCompatActivity {
     private int shipId;
     private int weaponId;
 
+    private Spinner spnTypeMain;
+
     private TextView lblEnhance;
     private SeekBar sldEnhance;
+
     private TextView lblBaseDmg;
     private TextView lblRoF;
     private TextView lblCoeff;
     private TextView lblAmmo;
+
     private TextView lblDPSTitle;
     private TextView lblDPS;
     private Button btnShip;
@@ -133,6 +140,13 @@ public class Calculator extends AppCompatActivity {
 
         mQueue = Volley.newRequestQueue(this);
 
+        spnTypeMain = findViewById(R.id.viewSpnMain);
+        ArrayAdapter<CharSequence> main = ArrayAdapter.createFromResource
+                (this, R.array.gunTypeMain, android.R.layout.simple_spinner_item);
+        main.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spnTypeMain.setAdapter(main);
+        spnTypeMain.setOnItemSelectedListener(this);
+
         lblEnhance = findViewById(R.id.viewLblEnhance);
         sldEnhance = findViewById(R.id.viewSldEnhance);
 
@@ -207,6 +221,8 @@ public class Calculator extends AppCompatActivity {
             shipId = data.getIntExtra("idShip",0);
             weaponId = data.getIntExtra("idWeapon",0);
             jsonParseStats();
+            spnTypeMain.setSelection(0);
+            spnTypeMain.setEnabled(true);
             jsonParseMainGuns();
 
         }
@@ -343,6 +359,16 @@ public class Calculator extends AppCompatActivity {
             lblDPS.setText(getResources().getString(R.string.lblMainGunDpsNum, ((dps * lightModifier) / cd),
                     ((dps * mediumModifier) / cd), ((dps * heavyModifier) / cd)));
         }
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
 
     }
 }

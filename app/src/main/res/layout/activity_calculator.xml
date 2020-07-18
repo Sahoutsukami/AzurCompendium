@@ -51,6 +51,14 @@
                     android:enabled="false"
                     android:onClick="selectWeapon"
                     android:text="@string/btnSelectWeapon" />
+
+                <Spinner
+                    android:id="@+id/viewSpnMain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="false"
+                    android:spinnerMode="dropdown" />
             </LinearLayout>
 
             <LinearLayout
