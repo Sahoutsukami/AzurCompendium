@@ -39,6 +39,7 @@ public class Calculator extends AppCompatActivity {
     private TextView lblRoF;
     private TextView lblCoeff;
     private TextView lblAmmo;
+    private TextView lblDPSTitle;
     private TextView lblDPS;
     private Button btnShip;
     private Button btnWeapon;
@@ -135,6 +136,12 @@ public class Calculator extends AppCompatActivity {
         lblEnhance = findViewById(R.id.viewLblEnhance);
         sldEnhance = findViewById(R.id.viewSldEnhance);
 
+        lblDPSTitle = findViewById(R.id.viewLblDPS);
+        absCd = getIntent().getDoubleExtra("absCd",0); //get absolute cooldown
+        if (absCd == 0){
+            lblDPSTitle.setText(getResources().getString(R.string.lblMainGunBB));
+        }
+
         lblBaseDmg = findViewById(R.id.viewLblBaseDmg);
         lblRoF = findViewById(R.id.viewLblBaseRoF);
         lblCoeff = findViewById(R.id.viewLblCoeff);
@@ -172,8 +179,7 @@ public class Calculator extends AppCompatActivity {
 
 
     public void selectButton(View view){
-        btnWeapon.setEnabled(false);
-        btnWeapon.setEnabled(false);
+        btnWeapon.setEnabled(true);
 
         String link = getIntent().getStringExtra("Ship");
         Intent i = new Intent(this, ShipSelection.class);
@@ -183,8 +189,7 @@ public class Calculator extends AppCompatActivity {
     }
 
     public void selectWeapon(View view){
-        btnWeapon.setEnabled(false);
-        btnWeapon.setEnabled(false);
+
 
         String link = getIntent().getStringExtra("MainGun");
         Intent i = new Intent(this, ShipSelection.class);
@@ -204,8 +209,6 @@ public class Calculator extends AppCompatActivity {
             jsonParseStats();
             jsonParseMainGuns();
 
-            btnShip.setEnabled(true);
-            btnWeapon.setEnabled(true);
         }
     }    //Return
                                                                                                      //Position
@@ -264,7 +267,6 @@ public class Calculator extends AppCompatActivity {
 
     private void jsonParseMainGuns(){
 
-       // if (){}
         String url = getIntent().getStringExtra("MainGun");
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
@@ -296,6 +298,8 @@ public class Calculator extends AppCompatActivity {
                             ammo = ship.getString("Ammo");
                             wFaction = ship.getString("Faction");
 
+
+
                             //setTexts();
                             Formatting();
 
@@ -313,8 +317,6 @@ public class Calculator extends AppCompatActivity {
 
     } //Parse weapons
     private void MainDPS(){
-        absCd = getIntent().getDoubleExtra("absCd",0); //get absolute cooldown
-
 
         //Apply enhances to Main gun damage and reload
         enhancedDmg = enhanceDmg*enhanceLvl;
@@ -333,9 +335,14 @@ public class Calculator extends AppCompatActivity {
         double dps = (finalDmg*coeff*eff1*FPBonus*nVolleys);                //Real DPS
         //double dps = (finalDmg*coeff*nVolleys);                               //Only Weapon
 
-        lblDPS.setText(getResources().getString(R.string.lblMainGunDpsNum, ((dps*lightModifier)/cd),
-                ((dps*mediumModifier)/cd), ((dps*heavyModifier)/cd)));
+        if (absCd == 0) {
+            lblDPS.setText(getResources().getString(R.string.lblMainGunDpsNum,(dps * lightModifier),
+                    (dps * mediumModifier), (dps * heavyModifier)));
+        }
+        else {
+            lblDPS.setText(getResources().getString(R.string.lblMainGunDpsNum, ((dps * lightModifier) / cd),
+                    ((dps * mediumModifier) / cd), ((dps * heavyModifier) / cd)));
+        }
 
     }
-
 }

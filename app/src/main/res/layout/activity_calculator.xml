@@ -6,170 +6,185 @@
     android:layout_height="match_parent"
     tools:context=".Calculator">
 
-    <LinearLayout
-        android:id="@+id/selectShip"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        >
 
-        <Button
-            android:id="@+id/btnSelectSip"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:onClick="selectButton"
-            android:text="@string/btnSelectShip" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/weapon"
-        android:layout_width="408dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:orientation="horizontal"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectShip">
-
-        <Button
-            android:id="@+id/btnSelectWeapon"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="selectWeapon"
-            android:enabled="false"
-            android:text="@string/btnSelectWeapon" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/enhance"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weapon">
-
-        <TextView
-            android:id="@+id/viewLblEnhance"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:letterSpacing="0.035"
-            android:text="@string/lblEnhance"
-            android:textSize="24sp"
-            android:textStyle="bold|italic" />
+            android:orientation="vertical">
 
-        <SeekBar
-            android:id="@+id/viewSldEnhance"
-            style="@style/Widget.AppCompat.SeekBar.Discrete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:max="10"
-            android:progress="0" />
+            <LinearLayout
+                android:id="@+id/selectShip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
 
-    <RelativeLayout
-        android:id="@+id/MainGun"
-        android:layout_width="match_parent"
-        android:layout_height="415dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enhance">
+                <Button
+                    android:id="@+id/btnSelectSip"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:onClick="selectButton"
+                    android:text="@string/btnSelectShip" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/viewLblWeapon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="100dp"
-            android:text="@string/lblMainGun"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/weapon"
+                android:layout_width="408dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/selectShip">
 
-        <TextView
-            android:id="@+id/viewLblBaseDmg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/viewLblWeapon"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="24dp"
-            android:text="@string/lblMainDMG" />
+                <Button
+                    android:id="@+id/btnSelectWeapon"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:onClick="selectWeapon"
+                    android:text="@string/btnSelectWeapon" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/viewLblCoeff"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/viewLblBaseDmg"
-            android:layout_alignStart="@+id/viewLblBaseDmg"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="21dp"
-            android:text="@string/lblMainCoeff" />
+            <LinearLayout
+                android:id="@+id/enhance"
+                android:layout_width="409dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/weapon">
 
-        <TextView
-            android:id="@+id/viewLblBaseRoF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/viewLblBaseDmg"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="-20dp"
-            android:layout_marginEnd="51dp"
-            android:text="@string/lblMainRoF" />
+                <TextView
+                    android:id="@+id/viewLblEnhance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:letterSpacing="0.035"
+                    android:text="@string/lblEnhance"
+                    android:textSize="24sp"
+                    android:textStyle="bold|italic" />
 
-        <TextView
-            android:id="@+id/viewLblAmmo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/viewLblBaseRoF"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="21dp"
-            android:layout_marginEnd="72dp"
-            android:text="@string/lblMainAmmo" />
+                <SeekBar
+                    android:id="@+id/viewSldEnhance"
+                    style="@style/Widget.AppCompat.SeekBar.Discrete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:max="10"
+                    android:progress="0" />
 
-        <TextView
-            android:id="@+id/viewLblDPS"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/viewLblWeapon"
-            android:layout_alignStart="@+id/viewLblWeapon"
-            android:layout_alignEnd="@+id/viewLblWeapon"
-            android:gravity="center"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginEnd="0dp"
-            android:text="@string/lblMainGunDps" />
+            </LinearLayout>
 
-        <TextView
-            android:id="@+id/viewLblDpsLight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/viewLblDPS"
-            android:layout_alignStart="@+id/viewLblDPS"
-            android:layout_alignEnd="@+id/viewLblDPS"
-            android:gravity="center"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="27dp"
-            android:layout_marginEnd="0dp"
-            android:text="@string/lblMainGunDpsNum" />
+            <RelativeLayout
+                android:id="@+id/MainGun"
+                android:layout_width="match_parent"
+                android:layout_height="415dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/enhance">
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/viewLblWeapon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="100dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginEnd="100dp"
+                    android:text="@string/lblMainGun"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="168dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MainGun" />
+                <TextView
+                    android:id="@+id/viewLblBaseDmg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewLblWeapon"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/lblMainDMG" />
+
+                <TextView
+                    android:id="@+id/viewLblCoeff"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewLblBaseDmg"
+                    android:layout_alignStart="@+id/viewLblBaseDmg"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="21dp"
+                    android:text="@string/lblMainCoeff" />
+
+                <TextView
+                    android:id="@+id/viewLblBaseRoF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewLblBaseDmg"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="-20dp"
+                    android:layout_marginEnd="51dp"
+                    android:text="@string/lblMainRoF" />
+
+                <TextView
+                    android:id="@+id/viewLblAmmo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewLblBaseRoF"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="21dp"
+                    android:layout_marginEnd="72dp"
+                    android:text="@string/lblMainAmmo" />
+
+                <TextView
+                    android:id="@+id/viewLblDPS"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewLblWeapon"
+                    android:layout_alignStart="@+id/viewLblWeapon"
+                    android:layout_alignEnd="@+id/viewLblWeapon"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginEnd="0dp"
+                    android:gravity="center"
+                    android:text="@string/lblMainGunDps"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/viewLblDpsLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/viewLblDPS"
+                    android:layout_alignStart="@+id/viewLblDPS"
+                    android:layout_alignEnd="@+id/viewLblDPS"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="27dp"
+                    android:layout_marginEnd="0dp"
+                    android:gravity="center"
+                    android:text="@string/lblMainGunDpsNum" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="100dp"
+                android:layout_marginTop="44dp"
+                android:text="TextView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/MainGun" />
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
