@@ -12,10 +12,8 @@
     <string name="btnSelectShip">-- Select your Shipfu --</string>
     <string name="btnSelectWeapon">-- Select your Weapon --</string>
 
-    <string-array name="gunTypeMain">
-        <item>DD</item>
-        <item>CL</item>
-    </string-array>
+    <string name="rdCL">CL</string>
+    <string name="rdDD">DD</string>
 
     <string name="lblEnhance">Enhance: +%1$d</string>
 

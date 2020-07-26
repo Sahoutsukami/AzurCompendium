@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -28,7 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Calculator extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Calculator extends AppCompatActivity  {
 
     private RequestQueue mQueue;
     private static final int REQUEST_GET_SHIP_LOCATION = 0;
@@ -36,8 +37,9 @@ public class Calculator extends AppCompatActivity implements AdapterView.OnItemS
     private int shipId;
     private int weaponId;
 
-    private Spinner spnTypeMain;
 
+    private RadioButton rdDD;
+    private RadioButton rdCL;
     private TextView lblEnhance;
     private SeekBar sldEnhance;
 
@@ -73,7 +75,7 @@ public class Calculator extends AppCompatActivity implements AdapterView.OnItemS
     private String name = "-- Select your Shipfu";
     private String armor;
     private String faction;
-    private String slot1;
+    private String slot1 = "Nothing";
     private String slot2;
     // endregion Sip Stats
 
@@ -110,7 +112,16 @@ public class Calculator extends AppCompatActivity implements AdapterView.OnItemS
     private String wFaction;
     //endregion Weapon Stats
 
+    //Update Labels
     private void Formatting(){
+        Toast.makeText(this, slot1, Toast.LENGTH_SHORT).show();
+        if (slot1.equals("DD/CL Gun")) {
+            rdDD.setEnabled(true);
+            rdCL.setEnabled(true);
+        } else {
+            rdDD.setEnabled(false);
+            rdCL.setEnabled(false);
+        }
 
         MainDPS();
 
@@ -128,9 +139,6 @@ public class Calculator extends AppCompatActivity implements AdapterView.OnItemS
                 (R.string.lblMainCoeff, (100*coeff), "%"));
         lblAmmo.setText(getResources().getString
                 (R.string.lblMainAmmo, ammo));
-
-
-
     }
 
     @Override
@@ -140,12 +148,8 @@ public class Calculator extends AppCompatActivity implements AdapterView.OnItemS
 
         mQueue = Volley.newRequestQueue(this);
 
-        spnTypeMain = findViewById(R.id.viewSpnMain);
-        ArrayAdapter<CharSequence> main = ArrayAdapter.createFromResource
-                (this, R.array.gunTypeMain, android.R.layout.simple_spinner_item);
-        main.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spnTypeMain.setAdapter(main);
-        spnTypeMain.setOnItemSelectedListener(this);
+        rdDD = findViewById(R.id.viewRdDD);
+        rdCL = findViewById(R.id.viewRdCL);
 
         lblEnhance = findViewById(R.id.viewLblEnhance);
         sldEnhance = findViewById(R.id.viewSldEnhance);
@@ -169,6 +173,7 @@ public class Calculator extends AppCompatActivity implements AdapterView.OnItemS
 
         Formatting();
 
+        //Enhance is updated
         sldEnhance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -191,7 +196,7 @@ public class Calculator extends AppCompatActivity implements AdapterView.OnItemS
         });
     }
 
-
+    //go to selection activity (Ships)
     public void selectButton(View view){
         btnWeapon.setEnabled(true);
 
@@ -202,9 +207,8 @@ public class Calculator extends AppCompatActivity implements AdapterView.OnItemS
         startActivityForResult(i, REQUEST_GET_SHIP_LOCATION);
     }
 
+    //go to selection activity (Weapons)
     public void selectWeapon(View view){
-
-
         String link = getIntent().getStringExtra("MainGun");
         Intent i = new Intent(this, ShipSelection.class);
         i.putExtra("link", link).putExtra("from", "Weapon").putExtra
@@ -212,8 +216,7 @@ public class Calculator extends AppCompatActivity implements AdapterView.OnItemS
         startActivityForResult(i, REQUEST_GET_WEAPON_LOCATION);
     }
 
-
-
+    //return from activity
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -221,15 +224,13 @@ public class Calculator extends AppCompatActivity implements AdapterView.OnItemS
             shipId = data.getIntExtra("idShip",0);
             weaponId = data.getIntExtra("idWeapon",0);
             jsonParseStats();
-            spnTypeMain.setSelection(0);
-            spnTypeMain.setEnabled(true);
             jsonParseMainGuns();
 
+
         }
-    }    //Return
-                                                                                                     //Position
+    }
 
-
+    //Parse Ship stats (online)
     private void jsonParseStats(){
 
         String url = getIntent().getStringExtra("Ship");
@@ -279,11 +280,34 @@ public class Calculator extends AppCompatActivity implements AdapterView.OnItemS
             }
         });
         mQueue.add(request);
-    } //Parse when Ship change only
+    }
 
+
+    public void onClickListener (View view) {
+        jsonParseMainGuns();
+    }
+
+    //Parse main gun stats (online)
     private void jsonParseMainGuns(){
 
-        String url = getIntent().getStringExtra("MainGun");
+        String url;
+        switch ((int) (absCd*100)) {
+            case 26:
+                if (rdCL.isChecked()) {
+                    url = getIntent().getStringExtra("MainGun2");
+                } else {
+                    url = getIntent().getStringExtra("MainGun");
+                }
+                break;
+            case 28:
+                if (rdDD.isChecked()) {
+                    url = getIntent().getStringExtra("MainGun2");
+            } else {
+                    url = getIntent().getStringExtra("MainGun");
+                }
+                break;
+            default: url = getIntent().getStringExtra("MainGun");
+        }
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONObject>() {
@@ -331,7 +355,9 @@ public class Calculator extends AppCompatActivity implements AdapterView.OnItemS
         });
         mQueue.add(request);
 
-    } //Parse weapons
+    }
+
+    //Calculate DPS main gun
     private void MainDPS(){
 
         //Apply enhances to Main gun damage and reload
@@ -362,13 +388,5 @@ public class Calculator extends AppCompatActivity implements AdapterView.OnItemS
 
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
 }

@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, Calculator.class);
         i.putExtra("Ship","https://api.npoint.io/a296aa5cd2c25677387e");
         i.putExtra("MainGun","https://api.npoint.io/35bb066e41213e92dd02");
+        i.putExtra("MainGun2", "https://api.npoint.io/b7caf4091a0dbbb7230e");
         i.putExtra("absCd", 0.26);
         startActivity(i);
     }
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, Calculator.class);
         i.putExtra("Ship","https://api.npoint.io/17208540d3462e810aed");
         i.putExtra("MainGun", "https://api.npoint.io/b7caf4091a0dbbb7230e");
+        i.putExtra("MainGun2", "https://api.npoint.io/35bb066e41213e92dd02");
         i.putExtra("absCd", 0.28);
         startActivity(i);
     }

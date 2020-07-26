@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Calculator">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         >
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
             <LinearLayout
                 android:id="@+id/selectShip"
@@ -43,52 +38,70 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/selectShip">
 
+                <RadioGroup
+                    android:layout_width="123dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <RadioButton
+                        android:id="@+id/viewRdDD"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:onClick="onClickListener"
+                        android:text="@string/rdDD" />
+
+                    <RadioButton
+                        android:id="@+id/viewRdCL"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:onClick="onClickListener"
+                        android:text="@string/rdCL" />
+                </RadioGroup>
+
                 <Button
                     android:id="@+id/btnSelectWeapon"
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:enabled="false"
                     android:onClick="selectWeapon"
                     android:text="@string/btnSelectWeapon" />
 
-                <Spinner
-                    android:id="@+id/viewSpnMain"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="false"
-                    android:spinnerMode="dropdown" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/enhance"
-                android:layout_width="409dp"
+        <LinearLayout
+            android:id="@+id/enhance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/weapon">
+
+            <TextView
+                android:id="@+id/viewLblEnhance"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/weapon">
+                android:gravity="center"
+                android:letterSpacing="0.035"
+                android:text="@string/lblEnhance"
+                android:textSize="24sp"
+                android:textStyle="bold|italic" />
 
-                <TextView
-                    android:id="@+id/viewLblEnhance"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:letterSpacing="0.035"
-                    android:text="@string/lblEnhance"
-                    android:textSize="24sp"
-                    android:textStyle="bold|italic" />
+            <SeekBar
+                android:id="@+id/viewSldEnhance"
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="10"
+                android:progress="0" />
 
-                <SeekBar
-                    android:id="@+id/viewSldEnhance"
-                    style="@style/Widget.AppCompat.SeekBar.Discrete"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:max="10"
-                    android:progress="0" />
-
-            </LinearLayout>
+        </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/MainGun"
@@ -104,9 +117,10 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
-                    android:layout_marginStart="100dp"
+                    android:layout_marginStart="0dp"
                     android:layout_marginTop="14dp"
-                    android:layout_marginEnd="100dp"
+                    android:layout_marginEnd="0dp"
+                    android:gravity="center"
                     android:text="@string/lblMainGun"
                     android:textSize="20sp"
                     android:textStyle="bold" />
@@ -191,8 +205,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/MainGun" />
 
-        </LinearLayout>
-    </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

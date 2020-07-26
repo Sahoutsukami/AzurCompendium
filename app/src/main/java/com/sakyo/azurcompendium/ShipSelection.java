@@ -34,7 +34,6 @@ public class ShipSelection extends AppCompatActivity {
     private int selection1;
     private int selection2;
     private ArrayList<CardsShip> shipArrayList = new ArrayList<>();
-    private String origin;
 
 
     @Override
@@ -48,7 +47,7 @@ public class ShipSelection extends AppCompatActivity {
         layoutSelector = new LinearLayoutManager(this);
         recyclerSelector.setLayoutManager(layoutSelector);
 
-        origin = getIntent().getStringExtra("from");
+        String origin = getIntent().getStringExtra("from");
         selection1 = getIntent().getIntExtra("CurrentIdS", 0);
         selection2 = getIntent().getIntExtra("CurrentIdW", 0);
 
@@ -58,6 +57,8 @@ public class ShipSelection extends AppCompatActivity {
             jsonParseWeapons();
         }
     }
+
+    //Obtain Online ships names
     private void jsonParseNames(){
 
         String url = getIntent().getStringExtra("link");
@@ -68,6 +69,7 @@ public class ShipSelection extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray jsonArray = response.getJSONArray("Ships");
+
 
                             for (int i = 0; i < jsonArray.length(); i++) {
                                 JSONObject ship = jsonArray.getJSONObject(i);
@@ -102,8 +104,10 @@ public class ShipSelection extends AppCompatActivity {
             }
         });
         mQueue.add(request);
-    } //Obtain only one time names of Ships
+    }
 
+
+    //Parse Online weapons names
     private void jsonParseWeapons(){
 
         String url = getIntent().getStringExtra("link");
@@ -150,7 +154,7 @@ public class ShipSelection extends AppCompatActivity {
             }
         });
         mQueue.add(request);
-    } //Obtain only one time names of Weapons
+    }
 
 
     public void debug(){
