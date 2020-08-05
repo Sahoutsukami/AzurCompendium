@@ -37,7 +37,6 @@ public class Calculator extends AppCompatActivity  {
     private int shipId;
     private int weaponId;
 
-
     private RadioButton rdDD;
     private RadioButton rdCL;
     private TextView lblEnhance;
@@ -115,6 +114,8 @@ public class Calculator extends AppCompatActivity  {
     //Update Labels
     private void Formatting(){
         Toast.makeText(this, slot1, Toast.LENGTH_SHORT).show();
+
+        //enable radio buttons
         if (slot1.equals("DD/CL Gun")) {
             rdDD.setEnabled(true);
             rdCL.setEnabled(true);
@@ -282,7 +283,6 @@ public class Calculator extends AppCompatActivity  {
         mQueue.add(request);
     }
 
-
     public void onClickListener (View view) {
         jsonParseMainGuns();
     }
@@ -292,6 +292,7 @@ public class Calculator extends AppCompatActivity  {
 
         String url;
         switch ((int) (absCd*100)) {
+            //case DD
             case 26:
                 if (rdCL.isChecked()) {
                     url = getIntent().getStringExtra("MainGun2");
@@ -299,6 +300,7 @@ public class Calculator extends AppCompatActivity  {
                     url = getIntent().getStringExtra("MainGun");
                 }
                 break;
+            //case CL
             case 28:
                 if (rdDD.isChecked()) {
                     url = getIntent().getStringExtra("MainGun2");
@@ -314,6 +316,7 @@ public class Calculator extends AppCompatActivity  {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
+
                             JSONArray jsonArray = response.getJSONArray("Weapons");
 
                             JSONObject ship = jsonArray.getJSONObject(weaponId);
@@ -337,7 +340,6 @@ public class Calculator extends AppCompatActivity  {
                             wName = ship.getString("Nombre:");
                             ammo = ship.getString("Ammo");
                             wFaction = ship.getString("Faction");
-
 
 
                             //setTexts();
@@ -387,6 +389,4 @@ public class Calculator extends AppCompatActivity  {
         }
 
     }
-
-
 }
