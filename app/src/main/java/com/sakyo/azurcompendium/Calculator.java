@@ -210,7 +210,34 @@ public class Calculator extends AppCompatActivity  {
 
     //go to selection activity (Weapons)
     public void selectWeapon(View view){
-        String link = getIntent().getStringExtra("MainGun");
+
+        String link;
+        if (slot1.equals("DD/CL Gun")) {
+        switch ((int) (absCd*100)) {
+
+                //case DD
+                case 26:
+                    if (rdCL.isChecked()) {
+                        link = getIntent().getStringExtra("MainGun2");
+                    } else {
+                        link = getIntent().getStringExtra("MainGun");
+                    }
+                    break;
+                //case CL
+                case 28:
+                    if (rdDD.isChecked()) {
+                        link = getIntent().getStringExtra("MainGun2");
+                    } else {
+                        link = getIntent().getStringExtra("MainGun");
+                    }
+                    break;
+                default:
+                    link = getIntent().getStringExtra("MainGun");
+            }
+        } else {
+            link = getIntent().getStringExtra("MainGun");
+        }
+
         Intent i = new Intent(this, ShipSelection.class);
         i.putExtra("link", link).putExtra("from", "Weapon").putExtra
                 ("CurrentIdS", shipId).putExtra("CurrentIdW", weaponId);
@@ -291,24 +318,29 @@ public class Calculator extends AppCompatActivity  {
     private void jsonParseMainGuns(){
 
         String url;
-        switch ((int) (absCd*100)) {
-            //case DD
-            case 26:
-                if (rdCL.isChecked()) {
-                    url = getIntent().getStringExtra("MainGun2");
-                } else {
+        if (slot1.equals("DD/CL Gun")) {
+            switch ((int) (absCd * 100)) {
+                //case DD
+                case 26:
+                    if (rdCL.isChecked()) {
+                        url = getIntent().getStringExtra("MainGun2");
+                    } else {
+                        url = getIntent().getStringExtra("MainGun");
+                    }
+                    break;
+                //case CL
+                case 28:
+                    if (rdDD.isChecked()) {
+                        url = getIntent().getStringExtra("MainGun2");
+                    } else {
+                        url = getIntent().getStringExtra("MainGun");
+                    }
+                    break;
+                default:
                     url = getIntent().getStringExtra("MainGun");
-                }
-                break;
-            //case CL
-            case 28:
-                if (rdDD.isChecked()) {
-                    url = getIntent().getStringExtra("MainGun2");
-            } else {
-                    url = getIntent().getStringExtra("MainGun");
-                }
-                break;
-            default: url = getIntent().getStringExtra("MainGun");
+            }
+        } else {
+            url =getIntent().getStringExtra("MainGun");
         }
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
