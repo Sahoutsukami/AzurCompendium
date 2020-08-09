@@ -27,6 +27,78 @@
                     android:layout_height="match_parent"
                     android:onClick="selectButton"
                     android:text="@string/btnSelectShip" />
+
+                <CheckBox
+                    android:id="@+id/viewChkStats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/chkAttributes"
+                    android:visibility="visible" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/ShipStats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/viewLblFP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/lblFP"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/viewtxtFP"
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:ems="10"
+                        android:hint="@string/lblFP"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        app:layout_constraintStart_toEndOf="@+id/viewLblFP"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/viewLblEff1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="120dp"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/lblEff1"
+                        app:layout_constraintStart_toEndOf="@+id/viewtxtFP"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <EditText
+                        android:id="@+id/viewTxtEff1"
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:ems="10"
+                        android:hint="@string/lblEff1"
+                        android:importantForAutofill="no"
+                        android:inputType="number"
+                        app:layout_constraintStart_toEndOf="@+id/viewLblEff1"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/viewBtnEditStats"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:onClick="applyStats"
+                        android:text="@string/btnStats"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/viewtxtFP" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </LinearLayout>
 
             <LinearLayout

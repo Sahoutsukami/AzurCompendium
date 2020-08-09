@@ -2,6 +2,7 @@ package com.sakyo.azurcompendium;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 
 import android.app.Activity;
@@ -11,6 +12,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.Checkable;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.Spinner;
@@ -36,6 +41,11 @@ public class Calculator extends AppCompatActivity  {
     private static final int REQUEST_GET_WEAPON_LOCATION = 0;
     private int shipId;
     private int weaponId;
+
+    private CheckBox chkStats;
+    private ConstraintLayout tableStats;
+    private EditText txtFP;
+    private EditText txtEff1;
 
     private RadioButton rdDD;
     private RadioButton rdCL;
@@ -115,6 +125,9 @@ public class Calculator extends AppCompatActivity  {
     private void Formatting(){
         Toast.makeText(this, slot1, Toast.LENGTH_SHORT).show();
 
+        txtFP.setText(fp);
+        txtEff1.setText(eff1);
+
         //enable radio buttons
         if (slot1.equals("DD/CL Gun")) {
             rdDD.setEnabled(true);
@@ -148,6 +161,11 @@ public class Calculator extends AppCompatActivity  {
         setContentView(R.layout.activity_calculator);
 
         mQueue = Volley.newRequestQueue(this);
+
+        chkStats = findViewById(R.id.viewChkStats);
+        tableStats = findViewById(R.id.ShipStats);
+        txtFP = findViewById(R.id.viewtxtFP);
+        txtEff1 = findViewById(R.id.viewTxtEff1);
 
         rdDD = findViewById(R.id.viewRdDD);
         rdCL = findViewById(R.id.viewRdCL);
@@ -194,6 +212,16 @@ public class Calculator extends AppCompatActivity  {
             public void onStartTrackingTouch(SeekBar seekBar) {            }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {            }
+        });
+        chkStats.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    tableStats.setVisibility(View.VISIBLE);
+                } else {
+                    tableStats.setVisibility(View.GONE);
+                }
+            }
         });
     }
 
@@ -242,6 +270,13 @@ public class Calculator extends AppCompatActivity  {
         i.putExtra("link", link).putExtra("from", "Weapon").putExtra
                 ("CurrentIdS", shipId).putExtra("CurrentIdW", weaponId);
         startActivityForResult(i, REQUEST_GET_WEAPON_LOCATION);
+    }
+
+    public void applyStats(View view){
+        fp = Integer.parseInt(txtFP.getText().toString());
+        double teff1;
+        teff1 = Integer.parseInt(txtEff1.getText().toString());
+        eff1 = teff1/100;
     }
 
     //return from activity

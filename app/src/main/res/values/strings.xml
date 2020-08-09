@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AzurCompendium</string>
+    <string name="app_name">Azur Compendium</string>
     <string name="btnDD">Destroyers(DD)</string>
     <string name="btnCL">Light Cruisers(CL)</string>
     <string name="btnCA">Heavy Cruisers(CA)</string>
@@ -10,6 +10,11 @@
     <string name="descriptorImage">No description found</string>
     
     <string name="btnSelectShip">-- Select your Shipfu --</string>
+    <string name="chkAttributes">Edit/View Ship Stats</string>
+    <string name="lblFP">FP: </string>
+    <string name="lblEff1">Eff: </string>
+    <string name="btnStats">Apply</string>
+
     <string name="btnSelectWeapon">-- Select your Weapon --</string>
 
     <string name="rdCL">CL</string>
